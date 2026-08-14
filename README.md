@@ -38,13 +38,9 @@ Then restart Hermes (start a new session, or restart the gateway). That's the wh
 - A worked example showing a flat, corporate voice turned into a human one
 - Screenshots of the whole flow running in the terminal and the desktop app
 
-## Similar tools
-
-[Soul Forge](https://github.com/LeventeNagy/soul-forge) by Levente Nagy generates new SOUL.md files from templates. Soul Finder is for onboarding and refining one you already have. Different jobs — they work well side by side.
-
 ## Credit
 
-The `SOUL.md` format was created by the team at [Nous Research](https://github.com/NousResearch/hermes-agent) for Hermes Agent. Soul Finder is based on the soul-builder plugin from the Hermes plugin ecosystem — we fixed a loading bug and made the first-run onboarding work on every surface. The credit for the format and the original plugin belongs to its creators.
+The `SOUL.md` format was created by the team at [Nous Research](https://github.com/NousResearch/hermes-agent) for Hermes Agent. Soul Finder is our own plugin for working with that format.
 
 ## License
 
