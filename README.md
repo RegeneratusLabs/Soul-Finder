@@ -1,4 +1,4 @@
-# SOUL.md Refinement Workflow
+# Soul Finder
 
 A Hermes Agent skill for separating durable voice from project context, condensing a bloated personality file down to essentials, and injecting real heat when a SOUL.md reads like a corporate style guide.
 
