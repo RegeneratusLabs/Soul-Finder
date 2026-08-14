@@ -2,12 +2,12 @@
 
 Soul Finder is a plugin for Hermes Agent that helps you build or fix your agent's personality.
 
-If you use Hermes, your agent has a personality file called `SOUL.md`. It's how your agent talks, what it cares about, and what it won't do. It usually starts out great — then slowly turns into a mess: old project notes, corporate language, a voice that sounds like a robot reading a style guide.
+If you use Hermes, your agent has a personality file called `SOUL.md`. It's how your agent talks, what it cares about, and what it won't do. It usually ends up sounding like corporate language, a voice that sounds like a robot reading a style guide.
 
 Soul Finder does two jobs:
 
 1. **First-run onboarding** — if a profile has no SOUL.md yet, the agent offers to build one. Once. If you say skip, it never asks again.
-2. **Refinement** — walks you through cleaning up a SOUL.md that's gone stale: seeing what's in there, keeping the good stuff, cutting the clutter, and making the voice sound like a person again.
+2. **Refinement** — walks you through cleaning up a SOUL.md that's gone stale: seeing what's in there, keeping the good stuff, cutting the clutter, and making the voice sound like a person again. This is through a multi step questionnaire. 
 
 ## What you need
 
@@ -16,7 +16,7 @@ Soul Finder does two jobs:
 
 ## Install
 
-Open a terminal and run:
+Open a terminal (or point this repo at your Hermes agent) and run:
 
 ```
 hermes plugins install RegeneratusLabs/soul-finder
@@ -38,9 +38,6 @@ Then restart Hermes (start a new session, or restart the gateway). That's the wh
 - A worked example showing a flat, corporate voice turned into a human one
 - Screenshots of the whole flow running in the terminal and the desktop app
 
-## Credit
-
-The `SOUL.md` format was created by the team at [Nous Research](https://github.com/NousResearch/hermes-agent) for Hermes Agent. Soul Finder is our own plugin for working with that format.
 
 ## License
 
