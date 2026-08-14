@@ -1,5 +1,5 @@
 ---
-name: soul-refinement-workflow
+name: soul-finder
 description: Iterative workflow for refining SOUL.md personality files - separating durable voice/tone from project context, condensing to essentials, and getting user approval before shipping.
 version: 1.0.0
 author: Hermes Agent

@@ -1,33 +1,52 @@
 # Soul Finder
 
-A Hermes Agent skill for refining `SOUL.md` personality files — separating durable voice from project context, condensing to essentials, and injecting personality when a soul reads flat.
+Soul Finder helps you fix your AI agent's personality.
 
-## What it does
+If you use Hermes Agent, your agent has a personality file called `SOUL.md`. It's how your agent talks, what it cares about, and what it won't do. It usually starts out great — then slowly turns into a mess: old project notes, corporate language, a voice that sounds like a robot reading a style guide.
 
-- Audits an existing `SOUL.md` for mixed concerns (personality vs project context)
-- Distinguishes **Voice-class** (~15–30 lines, pure tone) from **Persona-class** (60–100+ lines, strategic substance plus voice)
-- Rewrites flat voice sections with active, human language while preserving earned operating principles
-- Iterates with the user and ships only after explicit approval
+Soul Finder is a simple checklist for cleaning that file up. It walks you through:
 
-## Usage
+- seeing what's actually in there
+- keeping the good stuff — the parts that make it feel like you
+- cutting the clutter
+- making the voice sound like a person again
+- and only saving when you're happy with it
 
-Install as a Hermes skill and load it when refining a `SOUL.md`:
+## What you need
 
-```bash
-cp -r SKILL.md references ~/.hermes/skills/<category>/soul-finder/
+- Hermes Agent (that's the app your agent runs in)
+- No technical skills. If you can copy and paste a link, you can install this.
+
+## Install
+
+Open a terminal and run:
+
+```
+hermes skills install https://raw.githubusercontent.com/RegeneratusLabs/Soul-Finder/main/SKILL.md
 ```
 
-Then load it in a session with `/skill soul-finder`.
+That's the whole install. Start a new chat, and your agent can use it.
 
-## Contents
+## How to use it
 
-- `SKILL.md` — the workflow
-- `references/personality-injection-example.md` — before/after voice rewrite example
-- `screenshots/` — first-run onboarding flow in the TUI and desktop app
+1. Tell your agent: "clean up my SOUL.md" — or type `/skill soul-finder`
+2. Answer a few plain questions about how you want it to sound
+3. Look over what it wrote
+4. Say yes, and you're done
 
-## Credits
+## What's in the box
 
-`SOUL.md` is the identity file format of [Hermes Agent](https://github.com/NousResearch/hermes-agent) by Nous Research. This skill is a workflow for working with that format, and it builds on the soul-builder plugin from the Hermes plugin ecosystem. Credit for the format belongs to its original creators.
+- The checklist itself (`SKILL.md`)
+- A worked example showing a flat, corporate voice turned into a human one
+- Screenshots of the whole flow running in the terminal and the desktop app
+
+## Similar tools
+
+[Soul Forge](https://github.com/LeventeNagy/soul-forge) by Levente Nagy generates new SOUL.md files from templates. Soul Finder is for refining one you already have. Different jobs — they work well side by side.
+
+## Credit
+
+The `SOUL.md` format was created by the team at [Nous Research](https://github.com/NousResearch/hermes-agent) for Hermes Agent. Soul Finder is just a way of working with their format — the credit for it belongs to them.
 
 ## License
 
