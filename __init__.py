@@ -11,10 +11,6 @@ Trigger surface:
   plugin:soul-finder          bundled workflow skill (the real product)
   soul_finder_status          tool — file/mode state for the agent
   soul_finder_complete        tool — marks flow finished after user-approved write
-
-Based on the soul-builder plugin from the Hermes Agent plugin ecosystem
-(Nous Research). Fixes: register_skill Path bug + model-driven onboarding
-that works on every surface, not just the interactive CLI.
 """
 
 import json
@@ -24,13 +20,21 @@ from pathlib import Path
 PLUGIN_DIR = Path(__file__).parent
 
 # --------------------------------------------------------------------------
-# State helpers — file markers in the plugin dir. `~/.hermes/plugins/` is
-# user-writable; keep state next to the code so it is discoverable and
-# survives across sessions without touching config or memory.
+# State — two booleans in the plugin's own PluginState (profile-scoped, under
+# $HERMES_HOME/plugin-data/). Bound to ctx.state in register(); nothing is
+# written into the plugin checkout, so an update never trips over local files.
 # --------------------------------------------------------------------------
 
-_NUDGE = PLUGIN_DIR / ".nudge-sent"      # first-run nudge fired once, ever
-_DONE = PLUGIN_DIR / ".complete"         # user finished a soul via this plugin
+_STATE = None
+
+
+def _flag(name: str) -> bool:
+    return bool(_STATE.get(name, False)) if _STATE is not None else False
+
+
+def _set_flag(name: str) -> None:
+    if _STATE is not None:
+        _STATE.set(name, True)
 
 
 def _soul_path() -> Path:
@@ -69,13 +73,13 @@ def _status() -> str:
         "soul_path": str(p),
         "soul_exists": p.exists(),
         "soul_size": p.stat().st_size if p.exists() else 0,
-        "flow_complete": _DONE.exists(),
-        "nudge_sent": _NUDGE.exists(),
+        "flow_complete": _flag("flow_complete"),
+        "nudge_sent": _flag("nudge_sent"),
     })
 
 
 def _mark_complete() -> str:
-    _DONE.write_text("1")
+    _set_flag("flow_complete")
     return json.dumps({"success": True, "message": "SOUL.md flow marked complete"})
 
 
@@ -108,6 +112,11 @@ NUDGE = (
 # --------------------------------------------------------------------------
 
 def register(ctx):
+    global _STATE
+    # ``state`` is a property on the real PluginContext; the catalog's
+    # capability probe exposes methods only, so bind defensively.
+    _STATE = getattr(ctx, "state", None)
+
     # --- Slash command: /soul [new|refine|status] -------------------------
     def soul_cmd(raw_args: str):
         arg = (raw_args or "").strip().lower()
@@ -130,19 +139,19 @@ def register(ctx):
         description="Build or refine your SOUL.md (new|refine|status)",
     )
 
-    # --- First-run nudge: once per install, never again -------------------
+    # --- First-run nudge: once per profile, never again -------------------
     def on_session_start(session_id, model, platform, **kwargs):
-        if _NUDGE.exists() or _DONE.exists():
+        if _flag("nudge_sent") or _flag("flow_complete"):
             return
         # Don't nudge people who already have a real soul (hand-written).
         if _has_real_soul():
-            _NUDGE.write_text("1")
+            _set_flag("nudge_sent")
             return
         # Only mark the nudge as sent if the injection actually landed.
         # In desktop/gateway surfaces injection may be unavailable — the
         # system-prompt section (below) drives the offer there instead.
         if ctx.inject_message(NUDGE, role="user"):
-            _NUDGE.write_text("1")
+            _set_flag("nudge_sent")
 
     ctx.register_hook("on_session_start", on_session_start)
 
@@ -152,9 +161,9 @@ def register(ctx):
         # The marker is written here by the plugin (not left to the model),
         # so a user who declines is NEVER asked again — no dependence on
         # model behavior or tool calls.
-        if _DONE.exists() or _has_real_soul() or _NUDGE.exists():
+        if _flag("flow_complete") or _has_real_soul() or _flag("nudge_sent"):
             return ""
-        _NUDGE.write_text("1")
+        _set_flag("nudge_sent")
         return (
             "FIRST-RUN ONBOARDING: this profile has no SOUL.md yet — the file that "
             "defines the agent's personality and voice, loaded into every "

@@ -1,3 +1,25 @@
+manifest_version: 2
 name: soul-finder
-version: "1.0.0"
-description: Build or refine your Hermes agent's SOUL.md personality — first-run onboarding, audit, and voice injection.
+label: Soul Finder
+kind: standalone
+version: "1.1.0"
+author: Regeneratus Labs
+homepage: https://github.com/RegeneratusLabs/Soul-Finder
+license: MIT
+description: >
+  Build or refine your Hermes agent's SOUL.md — the personality file loaded into
+  every conversation. NEW flow interviews you and drafts a soul from scratch;
+  REFINE audits an existing one against the gold-standard structure, asks only
+  the gap questions, and ships a diff. Adds a /soul command, the
+  soul_finder_status and soul_finder_complete tools, a once-per-profile
+  first-run offer, and a bundled workflow skill.
+requires_hermes: ">=0.21.5"
+platforms: [linux, macos]
+tags: [personality, soul, onboarding, voice]
+provides_tools:
+  - soul_finder_status
+  - soul_finder_complete
+provides_hooks:
+  - on_session_start
+provides_middleware: []
+requires_env: []

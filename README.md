@@ -39,6 +39,13 @@ Then restart Hermes (start a new session, or restart the gateway). That's the wh
 - Screenshots of the whole flow running in the terminal and the desktop app
 
 
+## What it touches
+
+- **Reads** `$HERMES_HOME/SOUL.md` to decide which flow to run — new or refine.
+- **Writes** `SOUL.md` only through the agent's own file tools, and only after you approve the draft it shows you.
+- **Writes** two booleans to the plugin's own state file, `$HERMES_HOME/plugin-data/soul-finder/state.json`, so the first-run offer happens once and never nags again.
+- No network calls, no credentials, nothing leaves your machine.
+
 ## License
 
 MIT
